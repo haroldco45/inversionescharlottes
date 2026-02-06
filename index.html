@@ -3,104 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones Charlotte's - App de Pedidos</title>
+    <title>Inversiones Charlotte's</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --charlotte-red: #e63946;
             --charlotte-yellow: #ffbe0b;
-            --charlotte-blue: #00b4d8;
         }
         .header-gradient {
             background: linear-gradient(180deg, var(--charlotte-yellow) 0%, #f97316 100%);
         }
-        .invisible-sub { display: none; } /* Control de suscripción invisible */
     </style>
 </head>
-<body class="bg-gray-100 pb-20">
+<body class="bg-gray-100 pb-24">
 
-    <header class="header-gradient p-4 text-center shadow-lg rounded-b-3xl">
-        <div class="bg-white p-2 rounded-full inline-block mb-2 shadow-inner">
-            <img src="https://i.ibb.co/LzdS8W4/inversiones-charlottes.jpg" alt="Logo" class="w-24 h-24 rounded-full object-contain">
+    <header class="header-gradient p-6 text-center shadow-lg rounded-b-3xl">
+        <div class="bg-white p-2 rounded-full inline-block mb-2 shadow-md">
+            <img src="inversiones-charlottes.PNG" alt="Logo Inversiones Charlotte's" class="w-28 h-28 rounded-full object-contain">
         </div>
-        <h1 class="text-white font-bold text-xl uppercase tracking-wider">Inversiones Charlotte's</h1>
-        <p class="text-white text-sm">Proveedor de Líquidos</p>
+        <h1 class="text-white font-bold text-2xl uppercase tracking-tighter">Inversiones Charlotte's</h1>
+        <p class="text-white text-sm opacity-90">Proveedor de Líquidos</p>
     </header>
 
     <section class="p-4">
-        <div id="display-datos" class="bg-white p-4 rounded-xl shadow-md border-l-4 border-yellow-500 flex justify-between items-center">
-            <div>
-                <p class="text-xs text-gray-500 uppercase font-bold">Entrega en:</p>
-                <p id="txt-direccion" class="font-semibold text-gray-800">Carrera 5ta No 22-43, B. Kennedy</p>
-                <p id="txt-telefono" class="text-sm text-gray-600">Tel: 3222557721</p>
+        <div id="seccion-datos" class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-gray-700 flex items-center">
+                    <i class="fas fa-user-circle mr-2 text-orange-500"></i> DATOS DE ENTREGA
+                </h2>
+                <button onclick="toggleEditar()" class="text-blue-500 text-sm font-bold">
+                    <i class="fas fa-edit"></i> EDITAR
+                </button>
             </div>
-            <button onclick="toggleEditar()" class="text-blue-500 p-2 hover:bg-blue-50 rounded-full">
-                <i class="fas fa-edit"></i>
-            </button>
-        </div>
 
-        <div id="form-datos" class="hidden bg-white p-4 rounded-xl shadow-md mt-2">
-            <input id="input-direccion" type="text" placeholder="Dirección" class="w-full mb-2 p-2 border rounded">
-            <input id="input-telefono" type="text" placeholder="Teléfono" class="w-full mb-2 p-2 border rounded">
-            <button onclick="guardarDatos()" class="bg-green-500 text-white px-4 py-2 rounded w-full font-bold">Guardar Cambios</button>
+            <div id="display-datos" class="hidden space-y-1">
+                <p id="txt-nombre" class="font-bold text-gray-800 uppercase text-sm">Cargando...</p>
+                <p id="txt-direccion" class="text-gray-600 text-sm">Carrera 5ta No 22-43, B. Kennedy</p>
+                <p id="txt-telefono" class="text-gray-600 text-sm">WhatsApp: 3222557721</p>
+            </div>
+
+            <div id="form-datos" class="space-y-3">
+                <input id="input-nombre" type="text" placeholder="Tu nombre o negocio" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
+                <input id="input-direccion" type="text" placeholder="Dirección exacta" value="Carrera 5ta No 22-43, B. Kennedy" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
+                <input id="input-telefono" type="tel" placeholder="Número de celular" value="3222557721" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
+                <button onclick="guardarDatos()" class="bg-orange-500 text-white px-4 py-3 rounded-lg w-full font-bold shadow-md hover:bg-orange-600 transition">
+                    CONFIRMAR DATOS
+                </button>
+            </div>
         </div>
     </section>
 
     <main class="px-4">
-        <h2 class="font-bold text-gray-700 mb-3 flex items-center">
-            <i class="fas fa-bottle-water mr-2 text-blue-500"></i> PRODUCTOS DISPONIBLES
-        </h2>
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="font-bold text-gray-800 uppercase text-sm tracking-widest">Catálogo de Líquidos</h2>
+            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">DISPONIBLES</span>
+        </div>
         
-        <div id="lista-productos" class="grid grid-cols-1 gap-3">
-            <div class="bg-white p-3 rounded-xl shadow flex items-center border border-gray-100">
-                <div class="w-16 h-16 bg-gray-200 rounded-lg mr-4 flex items-center justify-center text-xs text-gray-400">PONY</div>
-                <div class="flex-grow">
-                    <h3 class="font-bold text-gray-800">Pony Malta 330ml</h3>
-                    <p class="text-orange-600 font-bold">$ 2.500</p>
+        <div id="lista-productos" class="space-y-3">
+            <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between border border-transparent hover:border-yellow-300 transition">
+                <div class="flex items-center">
+                    <div class="w-14 h-14 bg-orange-50 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-bottle-water text-orange-400 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Pony Malta 330ml</h3>
+                        <p class="text-green-600 font-black">$ 2.500</p>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <button class="bg-gray-200 w-8 h-8 rounded-full font-bold">-</button>
-                    <span class="font-bold">0</span>
-                    <button class="bg-yellow-500 text-white w-8 h-8 rounded-full font-bold">+</button>
+                <div class="flex items-center space-x-3 bg-gray-50 p-1 rounded-full">
+                    <button class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 hover:text-red-500 font-bold">-</button>
+                    <span class="font-bold text-gray-700">0</span>
+                    <button class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
                 </div>
             </div>
             </div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-white border-t p-4 flex justify-between items-center shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
-        <div class="relative">
-            <i class="fas fa-shopping-cart text-2xl text-gray-400"></i>
-            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] rounded-full px-1.5 py-0.5">0</span>
+    <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 p-4 flex justify-between items-center shadow-2xl z-50">
+        <div class="flex items-center">
+            <div class="relative mr-4">
+                <i class="fas fa-shopping-basket text-3xl text-gray-300"></i>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-400 uppercase font-bold">Total Pedido</p>
+                <p class="font-black text-xl text-green-700 leading-none">$ 0.00</p>
+            </div>
         </div>
-        <div class="text-right">
-            <p class="text-xs text-gray-500">Total Pedido:</p>
-            <p class="font-bold text-lg text-green-700">$ 0.00</p>
-        </div>
-        <button class="bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-red-700 transition">
-            PEDIR <i class="fab fa-whatsapp ml-1"></i>
+        <button onclick="enviarPedido()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:scale-105 active:scale-95 transition-all">
+            PEDIR <i class="fab fa-whatsapp ml-1 text-lg"></i>
         </button>
     </nav>
 
     <script>
-        // Funciones de control de interfaz
+        // Control de suscripción invisible (Ejemplo de lógica interna)
+        const suscripcionActiva = true; //
+        if(!suscripcionActiva) {
+            document.body.innerHTML = "<div style='display:flex; height:100vh; align-items:center; justify-content:center; text-align:center; padding:20px; font-family:sans-serif;'><div><h1 style='color:red;'>AVISO</h1><p>Esta aplicación requiere activación de suscripción.</p></div></div>";
+        }
+
         function toggleEditar() {
             const form = document.getElementById('form-datos');
+            const display = document.getElementById('display-datos');
             form.classList.toggle('hidden');
+            display.classList.toggle('hidden');
         }
 
         function guardarDatos() {
+            const nombre = document.getElementById('input-nombre').value;
             const dir = document.getElementById('input-direccion').value;
             const tel = document.getElementById('input-telefono').value;
-            if(dir) document.getElementById('txt-direccion').innerText = dir;
-            if(tel) document.getElementById('txt-telefono').innerText = tel;
-            toggleEditar();
+
+            if(nombre && dir && tel) {
+                document.getElementById('txt-nombre').innerText = nombre;
+                document.getElementById('txt-direccion').innerText = dir;
+                document.getElementById('txt-telefono').innerText = "WhatsApp: " + tel;
+                toggleEditar();
+            } else {
+                alert("Por favor completa todos los campos de entrega.");
+            }
         }
 
-        // El control de suscripción se maneja aquí mediante lógica de backend o almacenamiento local
-        const subscripcionActiva = true; 
-        if (!subscripcionActiva) {
-            document.body.innerHTML = "<div class='p-10 text-center'>Servicio temporalmente suspendido.</div>";
+        function enviarPedido() {
+            const nombre = document.getElementById('txt-nombre').innerText;
+            if(nombre === "Cargando...") {
+                alert("Primero debes confirmar tus datos de entrega.");
+                return;
+            }
+            // Aquí irá la lógica para generar el mensaje de WhatsApp basado en el carrito
+            alert("Generando pedido para " + nombre + "...");
         }
     </script>
 </body>
