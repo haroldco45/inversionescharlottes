@@ -7,13 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --charlotte-red: #e63946;
-            --charlotte-yellow: #ffbe0b;
-        }
-        .header-gradient {
-            background: linear-gradient(180deg, var(--charlotte-yellow) 0%, #f97316 100%);
-        }
+        :root { --charlotte-red: #e63946; --charlotte-yellow: #ffbe0b; }
+        .header-gradient { background: linear-gradient(180deg, var(--charlotte-yellow) 0%, #f97316 100%); }
     </style>
 </head>
 <body class="bg-gray-100 pb-32">
@@ -24,7 +19,6 @@
         </div>
         <h1 class="text-white font-bold text-2xl uppercase tracking-tighter">Inversiones Charlotte's</h1>
         <p class="text-white text-sm font-bold opacity-90">Proveedor de Líquidos</p>
-        
         <div class="mt-3 bg-black/10 backdrop-blur-sm rounded-xl py-2 px-4 inline-block text-white text-xs">
             <p><i class="fas fa-map-marker-alt mr-1"></i> Carrera 5ta No 22-43, B. Kennedy</p>
             <p class="mt-1"><i class="fab fa-whatsapp mr-1"></i> Pedidos: 3222557721</p>
@@ -34,136 +28,105 @@
     <section class="p-4">
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="font-bold text-gray-700 flex items-center text-sm">
-                    <i class="fas fa-user-edit mr-2 text-orange-500"></i> DATOS DEL CLIENTE
-                </h2>
-                <span class="text-[10px] bg-gray-100 px-2 py-1 rounded-full font-bold text-gray-500">
-                    PEDIDO #<span id="num-consecutivo">1001</span>
-                </span>
+                <h2 class="font-bold text-gray-700 text-sm italic">DATOS DEL CLIENTE</h2>
+                <span class="text-[10px] bg-gray-100 px-2 py-1 rounded-full font-bold text-gray-500">PEDIDO #<span id="num-consecutivo">1001</span></span>
             </div>
-            
             <div class="space-y-3">
-                <input id="input-nombre" type="text" placeholder="Nombre o Negocio" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold text-sm">
+                <input id="input-nombre" type="text" placeholder="Tu Nombre o Negocio" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold text-sm">
                 <input id="input-celular" type="tel" placeholder="Tu Celular" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold text-sm">
                 <input id="input-direccion" type="text" placeholder="Dirección de Entrega" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold text-sm">
+                <textarea id="input-obs" rows="2" placeholder="Observaciones adicionales (Opcional)" class="w-full p-3 border border-gray-300 rounded-lg outline-none text-sm italic"></textarea>
             </div>
         </div>
     </section>
 
     <main class="px-4">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="font-bold text-gray-800 uppercase text-xs tracking-widest">Catálogo</h2>
-            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">VIBRAS POSITIVAS</span>
-        </div>
-        
         <div id="lista-productos" class="space-y-3">
-            <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between border border-transparent item-producto">
-                <div class="flex-grow">
-                    <h3 class="font-bold text-gray-800 text-base nombre-prod">Pony Malta 330ml</h3>
-                    <p class="text-green-600 font-black text-lg">$ <span class="precio-prod">2500</span></p>
-                </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
+                <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Pony Malta 330ml</h3><p class="text-green-600 font-black">$ <span class="precio-prod">2500</span></p></div>
                 <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
-                    <button onclick="operar(this, -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold text-xl">-</button>
-                    <span class="font-bold text-gray-700 text-lg cantidad">0</span>
-                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
+                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
+                    <span class="font-bold text-gray-700 cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
                 </div>
             </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
+                <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Gaseosa Postobón</h3><p class="text-green-600 font-black">$ <span class="precio-prod">2000</span></p></div>
+                <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
+                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
+                    <span class="font-bold text-gray-700 cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
+                </div>
             </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
+                <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Coca-Cola</h3><p class="text-green-600 font-black">$ <span class="precio-prod">3500</span></p></div>
+                <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
+                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
+                    <span class="font-bold text-gray-700 cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 p-4 flex justify-between items-center shadow-2xl z-50">
+    <nav class="fixed bottom-0 w-full bg-white border-t p-4 flex justify-between items-center shadow-2xl z-50">
         <div class="flex items-center">
-            <div class="relative mr-4">
-                <i class="fas fa-shopping-basket text-3xl text-gray-200"></i>
-                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
-            </div>
-            <div>
-                <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Total Pedido</p>
-                <p id="total-display" class="font-black text-xl text-green-700 leading-none">$ 0</p>
-            </div>
+            <div class="relative mr-4"><i class="fas fa-shopping-basket text-3xl text-gray-200"></i><span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span></div>
+            <div><p class="text-[10px] text-gray-400 uppercase font-bold">Total</p><p id="total-display" class="font-black text-xl text-green-700 leading-none">$ 0</p></div>
         </div>
-        <button onclick="enviarWhatsApp()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-red-700 transition-all flex items-center">
-            ENVIAR <i class="fab fa-whatsapp ml-2 text-lg"></i>
-        </button>
+        <button onclick="enviarWhatsApp()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-red-700 flex items-center">ENVIAR <i class="fab fa-whatsapp ml-2 text-lg"></i></button>
     </nav>
 
     <script>
-        // Inicializar consecutivo
-        let nroPedido = localStorage.getItem('cont_charlotte') || 1000;
-        document.getElementById('num-consecutivo').innerText = parseInt(nroPedido) + 1;
+        // Cargar datos guardados
+        window.onload = function() {
+            document.getElementById('input-nombre').value = localStorage.getItem('nom_ch') || '';
+            document.getElementById('input-celular').value = localStorage.getItem('cel_ch') || '';
+            document.getElementById('input-direccion').value = localStorage.getItem('dir_ch') || '';
+            let nro = localStorage.getItem('cont_ch') || 1000;
+            document.getElementById('num-consecutivo').innerText = parseInt(nro) + 1;
+        };
 
-        function operar(btn, valor) {
-            const contenedor = btn.closest('.item-producto');
-            const spanCant = contenedor.querySelector('.cantidad');
-            let actual = parseInt(spanCant.innerText);
-            
-            actual = Math.max(0, actual + valor);
-            spanCant.innerText = actual;
-            
+        function operar(btn, v) {
+            const span = btn.closest('.item-producto').querySelector('.cantidad');
+            span.innerText = Math.max(0, parseInt(span.innerText) + v);
             calcularTodo();
         }
 
         function calcularTodo() {
-            let granTotal = 0;
-            let unidadesTotales = 0;
-
-            document.querySelectorAll('.item-producto').forEach(prod => {
-                const c = parseInt(prod.querySelector('.cantidad').innerText);
-                const p = parseInt(prod.querySelector('.precio-prod').innerText);
-                
-                granTotal += (c * p);
-                unidadesTotales += c;
+            let t = 0, u = 0;
+            document.querySelectorAll('.item-producto').forEach(p => {
+                const c = parseInt(p.querySelector('.cantidad').innerText);
+                t += (c * parseInt(p.querySelector('.precio-prod').innerText));
+                u += c;
             });
-
-            document.getElementById('total-display').innerText = "$ " + granTotal.toLocaleString('es-CO');
-            document.getElementById('cart-count').innerText = unidadesTotales;
+            document.getElementById('total-display').innerText = "$ " + t.toLocaleString('es-CO');
+            document.getElementById('cart-count').innerText = u;
         }
 
         function enviarWhatsApp() {
-            const nombre = document.getElementById('input-nombre').value.trim();
-            const celular = document.getElementById('input-celular').value.trim();
-            const direccion = document.getElementById('input-direccion').value.trim();
+            const nom = document.getElementById('input-nombre').value;
+            const cel = document.getElementById('input-celular').value;
+            const dir = document.getElementById('input-direccion').value;
+            const obs = document.getElementById('input-obs').value;
             const nro = document.getElementById('num-consecutivo').innerText;
-            const total = document.getElementById('total-display').innerText;
 
-            if(!nombre || !celular || !direccion) {
-                alert("⚠️ Por favor completa Nombre, Celular y Dirección.");
-                return;
-            }
+            if(!nom || !cel || !dir) { alert("⚠️ Completa tus datos."); return; }
+            
+            // Guardar datos para la próxima vez
+            localStorage.setItem('nom_ch', nom); localStorage.setItem('cel_ch', cel); 
+            localStorage.setItem('dir_ch', dir); localStorage.setItem('cont_ch', nro);
 
-            let detalle = "";
-            document.querySelectorAll('.item-producto').forEach(prod => {
-                const c = parseInt(prod.querySelector('.cantidad').innerText);
-                const n = prod.querySelector('.nombre-prod').innerText;
-                if(c > 0) {
-                    detalle += `✅ ${c} x ${n}\n`;
-                }
+            let d = "";
+            document.querySelectorAll('.item-producto').forEach(p => {
+                const c = parseInt(p.querySelector('.cantidad').innerText);
+                if(c > 0) d += `✅ ${c} x ${p.querySelector('.nombre-prod').innerText}\n`;
             });
 
-            if(!detalle) {
-                alert("🛒 El carrito está vacío. Agrega productos con el botón +");
-                return;
-            }
+            if(!d) { alert("🛒 Carrito vacío."); return; }
 
-            // Guardar consecutivo
-            localStorage.setItem('cont_charlotte', nro);
-
-            const textoMsg = `*INVERSIONES CHARLOTTE'S*\n` +
-                             `*PEDIDO # ${nro}*\n` +
-                             `------------------------------\n` +
-                             `*CLIENTE:* ${nombre.toUpperCase()}\n` +
-                             `*CELULAR:* ${celular}\n` +
-                             `*DIRECCIÓN:* ${direccion}\n` +
-                             `------------------------------\n` +
-                             `*PRODUCTOS:*\n${detalle}\n` +
-                             `*TOTAL:* ${total}\n` +
-                             `------------------------------\n` +
-                             `_Enviado desde la App Oficial_`;
-
-            const link = `https://wa.me/573222557721?text=${encodeURIComponent(textoMsg)}`;
-            window.open(link, '_blank');
-
-            // Preparar siguiente número
+            const msg = `*INVERSIONES CHARLOTTE'S*\n*PEDIDO # ${nro}*\n------------------------------\n*CLIENTE:* ${nom.toUpperCase()}\n*TEL:* ${cel}\n*DIR:* ${dir}\n------------------------------\n*PRODUCTOS:*\n${d}*TOTAL:* ${document.getElementById('total-display').innerText}\n------------------------------\n${obs ? `*OBS:* ${obs}\n------------------------------\n` : ''}_Gracias por tu compra_`;
+            window.open(`https://wa.me/573222557721?text=${encodeURIComponent(msg)}`, '_blank');
             document.getElementById('num-consecutivo').innerText = parseInt(nro) + 1;
         }
     </script>
