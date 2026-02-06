@@ -33,28 +33,19 @@
 
     <section class="p-4">
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
-            <h2 class="font-bold text-gray-700 mb-4 flex items-center">
-                <i class="fas fa-user-edit mr-2 text-orange-500"></i> DATOS PARA TU PEDIDO
-            </h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-gray-700 flex items-center">
+                    <i class="fas fa-user-edit mr-2 text-orange-500"></i> DATOS PARA TU PEDIDO
+                </h2>
+                <span class="text-[10px] bg-gray-100 px-2 py-1 rounded-full font-bold text-gray-500">
+                    PEDIDO #<span id="num-consecutivo">1001</span>
+                </span>
+            </div>
             
             <div class="space-y-3">
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Nombre o Negocio</label>
-                    <input id="input-nombre" type="text" placeholder="Tu nombre" 
-                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
-                </div>
-
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Celular</label>
-                    <input id="input-celular" type="tel" placeholder="Tu número" 
-                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
-                </div>
-
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Dirección de Entrega</label>
-                    <input id="input-direccion" type="text" placeholder="¿A dónde lo llevamos?" 
-                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
-                </div>
+                <input id="input-nombre" type="text" placeholder="Nombre o Negocio" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold">
+                <input id="input-celular" type="tel" placeholder="Tu Celular" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold">
+                <input id="input-direccion" type="text" placeholder="Dirección de Entrega" class="w-full p-3 border border-gray-300 rounded-lg outline-none font-semibold">
             </div>
         </div>
     </section>
@@ -68,13 +59,13 @@
         <div id="lista-productos" class="space-y-3">
             <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between border border-transparent">
                 <div class="flex-grow">
-                    <h3 id="nombre-1" class="font-bold text-gray-800 text-base">Pony Malta 330ml</h3>
-                    <p class="text-green-600 font-black text-lg">$ 2.500</p>
+                    <h3 class="font-bold text-gray-800 text-base product-name">Pony Malta 330ml</h3>
+                    <p class="text-green-600 font-black text-lg">$ <span class="product-price">2500</span></p>
                 </div>
                 <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
-                    <button onclick="cambiarCantidad('cant-1', -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold hover:text-red-500 text-xl">-</button>
-                    <span id="cant-1" class="font-bold text-gray-700 text-lg">0</span>
-                    <button onclick="cambiarCantidad('cant-1', 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
+                    <button onclick="cambiarCantidad(this, -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold text-xl">-</button>
+                    <span class="font-bold text-gray-700 text-lg quantity">0</span>
+                    <button onclick="cambiarCantidad(this, 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
                 </div>
             </div>
         </div>
@@ -97,49 +88,79 @@
     </nav>
 
     <script>
-        let totalPrecio = 0;
-        let totalItems = 0;
-        const precioPony = 2500;
+        // Manejo del número consecutivo
+        let pedidoActual = localStorage.getItem('consecutivo_charlottes') || 1000;
+        document.getElementById('num-consecutivo').innerText = parseInt(pedidoActual) + 1;
 
-        function cambiarCantidad(id, delta) {
-            const span = document.getElementById(id);
+        function cambiarCantidad(btn, delta) {
+            const container = btn.parentElement;
+            const span = container.querySelector('.quantity');
             let cantidad = parseInt(span.innerText);
             cantidad = Math.max(0, cantidad + delta);
             span.innerText = cantidad;
-
             actualizarTotales();
         }
 
         function actualizarTotales() {
-            const cant1 = parseInt(document.getElementById('cant-1').innerText);
-            
-            totalItems = cant1;
-            totalPrecio = cant1 * precioPony;
-
-            document.getElementById('badge-carrito').innerText = totalItems;
-            document.getElementById('total-pedido').innerText = "$ " + totalPrecio.toLocaleString('es-CO');
+            let total = 0;
+            let items = 0;
+            document.querySelectorAll('.bg-white.p-4').forEach(prod => {
+                const cant = parseInt(prod.querySelector('.quantity').innerText);
+                const precio = parseInt(prod.querySelector('.product-price').innerText);
+                total += cant * precio;
+                items += cant;
+            });
+            document.getElementById('badge-carrito').innerText = items;
+            document.getElementById('total-pedido').innerText = "$ " + total.toLocaleString('es-CO');
         }
 
         function enviarPedido() {
             const nombre = document.getElementById('input-nombre').value;
             const celular = document.getElementById('input-celular').value;
             const direccion = document.getElementById('input-direccion').value;
-            const cant1 = document.getElementById('cant-1').innerText;
+            const totalFinal = document.getElementById('total-pedido').innerText;
+            const nroPedido = document.getElementById('num-consecutivo').innerText;
 
             if(!nombre || !celular || !direccion) {
-                alert("Por favor, completa tus datos de entrega.");
+                alert("Completa tus datos por favor.");
                 return;
             }
 
-            if(totalItems === 0) {
-                alert("No has seleccionado ningún producto.");
+            let productosTexto = "";
+            document.querySelectorAll('.bg-white.p-4').forEach(prod => {
+                const cant = parseInt(prod.querySelector('.quantity').innerText);
+                const nombreP = prod.querySelector('.product-name').innerText;
+                if(cant > 0) {
+                    productosTexto += `✅ ${cant} x ${nombreP}\n`;
+                }
+            });
+
+            if(!productosTexto) {
+                alert("Selecciona al menos un producto.");
                 return;
             }
 
-            let mensaje = `Hola Inversiones Charlotte's, soy ${nombre}. Mi celular es ${celular} y mi dirección es ${direccion}. Mi pedido es: ${cant1} Pony Malta 330ml. Total: $${totalPrecio.toLocaleString('es-CO')}`;
-            
+            // Aumentar el consecutivo para el próximo pedido
+            localStorage.setItem('consecutivo_charlottes', nroPedido);
+
+            // Formato del mensaje organizado
+            const mensaje = `*INVERSIONES CHARLOTTE'S*\n` +
+                            `*PEDIDO NRO:* #${nroPedido}\n` +
+                            `------------------------------\n` +
+                            `*CLIENTE:* ${nombre.toUpperCase()}\n` +
+                            `*CELULAR:* ${celular}\n` +
+                            `*DIRECCIÓN:* ${direccion}\n` +
+                            `------------------------------\n` +
+                            `*PRODUCTOS:*\n${productosTexto}\n` +
+                            `*TOTAL A PAGAR:* ${totalFinal}\n` +
+                            `------------------------------\n` +
+                            `_Gracias por tu compra_`;
+
             const url = `https://wa.me/573222557721?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
+            
+            // Actualizar el número en pantalla para el siguiente
+            document.getElementById('num-consecutivo').innerText = parseInt(nroPedido) + 1;
         }
     </script>
 </body>
