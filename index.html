@@ -20,7 +20,7 @@
 
     <header class="header-gradient p-6 text-center shadow-lg rounded-b-3xl">
         <div class="bg-white p-2 rounded-full inline-block mb-2 shadow-md">
-            <img src="inversiones-charlottes.PNG" alt="Logo Inversiones Charlotte's" class="w-28 h-28 rounded-full object-contain">
+            <img src="inversiones-charlottes.PNG" alt="Logo" class="w-28 h-28 rounded-full object-contain">
         </div>
         <h1 class="text-white font-bold text-2xl uppercase tracking-tighter">Inversiones Charlotte's</h1>
         <p class="text-white text-sm opacity-90">Proveedor de Líquidos</p>
@@ -44,11 +44,12 @@
             </div>
 
             <div id="form-datos" class="space-y-3">
-                <input id="input-nombre" type="text" placeholder="Tu nombre o negocio" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
-                <input id="input-direccion" type="text" placeholder="Dirección exacta" value="Carrera 5ta No 22-43, B. Kennedy" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
-                <input id="input-telefono" type="tel" placeholder="Número de celular" value="3222557721" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
+                <input id="input-nombre" type="text" placeholder="Escribe tu nombre aquí" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none">
+                <input id="input-direccion" type="text" value="Carrera 5ta No 22-43, B. Kennedy" class="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 outline-none">
+                <input id="input-telefono" type="tel" value="3222557721" class="w-full p-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 outline-none">
+                
                 <button onclick="guardarDatos()" class="bg-orange-500 text-white px-4 py-3 rounded-lg w-full font-bold shadow-md hover:bg-orange-600 transition">
-                    CONFIRMAR DATOS
+                    CONFIRMAR DATOS PARA PEDIDO
                 </button>
             </div>
         </div>
@@ -77,7 +78,7 @@
                     <button class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
                 </div>
             </div>
-            </div>
+        </div>
     </main>
 
     <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 p-4 flex justify-between items-center shadow-2xl z-50">
@@ -97,12 +98,6 @@
     </nav>
 
     <script>
-        // Control de suscripción invisible (Ejemplo de lógica interna)
-        const suscripcionActiva = true; //
-        if(!suscripcionActiva) {
-            document.body.innerHTML = "<div style='display:flex; height:100vh; align-items:center; justify-content:center; text-align:center; padding:20px; font-family:sans-serif;'><div><h1 style='color:red;'>AVISO</h1><p>Esta aplicación requiere activación de suscripción.</p></div></div>";
-        }
-
         function toggleEditar() {
             const form = document.getElementById('form-datos');
             const display = document.getElementById('display-datos');
@@ -115,24 +110,23 @@
             const dir = document.getElementById('input-direccion').value;
             const tel = document.getElementById('input-telefono').value;
 
-            if(nombre && dir && tel) {
+            if(nombre) {
                 document.getElementById('txt-nombre').innerText = nombre;
                 document.getElementById('txt-direccion').innerText = dir;
                 document.getElementById('txt-telefono').innerText = "WhatsApp: " + tel;
                 toggleEditar();
             } else {
-                alert("Por favor completa todos los campos de entrega.");
+                alert("Por favor escribe tu nombre para el pedido.");
             }
         }
 
         function enviarPedido() {
             const nombre = document.getElementById('txt-nombre').innerText;
             if(nombre === "Cargando...") {
-                alert("Primero debes confirmar tus datos de entrega.");
+                alert("Primero debes ingresar tu nombre y confirmar.");
                 return;
             }
-            // Aquí irá la lógica para generar el mensaje de WhatsApp basado en el carrito
-            alert("Generando pedido para " + nombre + "...");
+            alert("Pedido generado para " + nombre);
         }
     </script>
 </body>
