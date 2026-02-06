@@ -23,27 +23,37 @@
             <img src="inversiones-charlottes.PNG" alt="Logo" class="w-28 h-28 rounded-full object-contain">
         </div>
         <h1 class="text-white font-bold text-2xl uppercase tracking-tighter">Inversiones Charlotte's</h1>
-        <p class="text-white text-sm opacity-90">Proveedor de Líquidos</p>
+        <p class="text-white text-sm font-bold opacity-90">Proveedor de Líquidos</p>
+        
+        <div class="mt-3 bg-black/10 backdrop-blur-sm rounded-xl py-2 px-4 inline-block text-white text-xs">
+            <p><i class="fas fa-map-marker-alt mr-1"></i> Carrera 5ta No 22-43, B. Kennedy</p>
+            <p class="mt-1"><i class="fab fa-whatsapp mr-1"></i> Pedidos: 3222557721</p>
+        </div>
     </header>
 
     <section class="p-4">
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-yellow-200">
-            <h2 class="font-bold text-gray-700 mb-3 flex items-center">
-                <i class="fas fa-truck mr-2 text-orange-500"></i> INFORMACIÓN DE ENTREGA
+            <h2 class="font-bold text-gray-700 mb-4 flex items-center">
+                <i class="fas fa-user-edit mr-2 text-orange-500"></i> DATOS PARA TU PEDIDO
             </h2>
             
             <div class="space-y-3">
-                <input id="input-nombre" type="text" placeholder="Escribe tu nombre o negocio aquí" 
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-bold">
-                
-                <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <p class="text-[10px] text-gray-400 font-bold uppercase">Punto de Despacho:</p>
-                    <p class="text-sm text-gray-600 flex items-center mt-1">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i> Carrera 5ta No 22-43, B. Kennedy
-                    </p>
-                    <p class="text-sm text-gray-600 flex items-center mt-1">
-                        <i class="fab fa-whatsapp mr-2 text-green-500 font-bold"></i> Pedidos: 3222557721
-                    </p>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Nombre o Negocio</label>
+                    <input id="input-nombre" type="text" placeholder="Ej: Juan Pérez / Tienda La Esquina" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Número de Celular</label>
+                    <input id="input-celular" type="tel" placeholder="Ej: 300 123 4567" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Correo Electrónico</label>
+                    <input id="input-correo" type="email" placeholder="Ej: cliente@correo.com" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none font-semibold">
                 </div>
             </div>
         </div>
@@ -52,7 +62,7 @@
     <main class="px-4">
         <div class="flex items-center justify-between mb-4">
             <h2 class="font-bold text-gray-800 uppercase text-xs tracking-widest">Catálogo Disponible</h2>
-            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">VIBRAS POSITIVAS</span>
+            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded shadow-sm">VIBRAS POSITIVAS</span>
         </div>
         
         <div id="lista-productos" class="space-y-3">
@@ -67,7 +77,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3 bg-gray-50 p-1 rounded-full">
-                    <button class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
+                    <button class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold hover:text-red-500">-</button>
                     <span class="font-bold text-gray-700">0</span>
                     <button class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
                 </div>
@@ -82,11 +92,11 @@
                 <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
             </div>
             <div>
-                <p class="text-[10px] text-gray-400 uppercase font-bold leading-none mb-1">Total Pedido</p>
+                <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Total Pedido</p>
                 <p class="font-black text-xl text-green-700 leading-none">$ 0.00</p>
             </div>
         </div>
-        <button onclick="enviarPedido()" class="bg-red-600 text-white px-6 py-3 rounded-2xl font-black shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center">
+        <button onclick="enviarPedido()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center">
             ENVIAR <i class="fab fa-whatsapp ml-2 text-lg"></i>
         </button>
     </nav>
@@ -94,11 +104,14 @@
     <script>
         function enviarPedido() {
             const nombre = document.getElementById('input-nombre').value;
-            if(!nombre) {
-                alert("Por favor, ingresa tu nombre o el de tu negocio para procesar el pedido.");
+            const celular = document.getElementById('input-celular').value;
+            const correo = document.getElementById('input-correo').value;
+
+            if(!nombre || !celular || !correo) {
+                alert("Por favor, completa todos tus datos (Nombre, Celular y Correo) para poder procesar el pedido.");
                 return;
             }
-            alert("¡Pedido listo para " + nombre + "! Conectando con WhatsApp...");
+            alert("¡Perfecto " + nombre + "! Estamos preparando el resumen de tu pedido para WhatsApp.");
         }
     </script>
 </body>
