@@ -45,25 +45,25 @@
             <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
                 <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Pony Malta 330ml</h3><p class="text-green-600 font-black">$ <span class="precio-prod">2500</span></p></div>
                 <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
-                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
-                    <span class="font-bold text-gray-700 cantidad">0</span>
-                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
+                    <button onclick="operar(this, -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold hover:bg-red-50 text-xl">-</button>
+                    <span class="font-bold text-gray-700 text-lg cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
                 </div>
             </div>
             <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
                 <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Gaseosa Postobón</h3><p class="text-green-600 font-black">$ <span class="precio-prod">2000</span></p></div>
                 <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
-                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
-                    <span class="font-bold text-gray-700 cantidad">0</span>
-                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
+                    <button onclick="operar(this, -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold hover:bg-red-50 text-xl">-</button>
+                    <span class="font-bold text-gray-700 text-lg cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
                 </div>
             </div>
             <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between item-producto">
                 <div class="flex-grow"><h3 class="font-bold text-gray-800 text-sm nombre-prod">Coca-Cola</h3><p class="text-green-600 font-black">$ <span class="precio-prod">3500</span></p></div>
                 <div class="flex items-center space-x-4 bg-gray-100 p-2 rounded-full">
-                    <button onclick="operar(this, -1)" class="bg-white w-8 h-8 rounded-full shadow-sm text-gray-400 font-bold">-</button>
-                    <span class="font-bold text-gray-700 cantidad">0</span>
-                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-8 h-8 rounded-full shadow-sm font-bold">+</button>
+                    <button onclick="operar(this, -1)" class="bg-white w-10 h-10 rounded-full shadow-sm text-gray-400 font-bold hover:bg-red-50 text-xl">-</button>
+                    <span class="font-bold text-gray-700 text-lg cantidad">0</span>
+                    <button onclick="operar(this, 1)" class="bg-yellow-400 text-white w-10 h-10 rounded-full shadow-sm font-bold text-xl">+</button>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="relative mr-4"><i class="fas fa-shopping-basket text-3xl text-gray-200"></i><span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span></div>
             <div><p class="text-[10px] text-gray-400 uppercase font-bold">Total</p><p id="total-display" class="font-black text-xl text-green-700 leading-none">$ 0</p></div>
         </div>
-        <button onclick="enviarWhatsApp()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-red-700 flex items-center">ENVIAR <i class="fab fa-whatsapp ml-2 text-lg"></i></button>
+        <button onclick="enviarWhatsApp()" class="bg-red-600 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-red-700 flex items-center transition-all active:scale-95">ENVIAR <i class="fab fa-whatsapp ml-2 text-lg"></i></button>
     </nav>
 
     <script>
@@ -103,6 +103,17 @@
             document.getElementById('cart-count').innerText = u;
         }
 
+        function limpiarPedido() {
+            // Reiniciar cantidades a cero
+            document.querySelectorAll('.cantidad').forEach(span => {
+                span.innerText = "0";
+            });
+            // Resetear visualización de totales
+            calcularTodo();
+            // Limpiar campo de observaciones
+            document.getElementById('input-obs').value = "";
+        }
+
         function enviarWhatsApp() {
             const nom = document.getElementById('input-nombre').value;
             const cel = document.getElementById('input-celular').value;
@@ -110,28 +121,36 @@
             const obs = document.getElementById('input-obs').value;
             const nro = document.getElementById('num-consecutivo').innerText;
 
-            if(!nom || !cel || !dir) { alert("⚠️ Completa tus datos."); return; }
+            if(!nom || !cel || !dir) { alert("⚠️ Por favor completa los datos del cliente."); return; }
             
-            localStorage.setItem('nom_ch', nom); localStorage.setItem('cel_ch', cel); 
-            localStorage.setItem('dir_ch', dir); localStorage.setItem('cont_ch', nro);
+            // Guardar datos del cliente para la próxima vez
+            localStorage.setItem('nom_ch', nom); 
+            localStorage.setItem('cel_ch', cel); 
+            localStorage.setItem('dir_ch', dir); 
+            localStorage.setItem('cont_ch', nro);
 
-            let d = "";
-            let subtotal = 0;
+            let detalle = "";
             document.querySelectorAll('.item-producto').forEach(p => {
                 const c = parseInt(p.querySelector('.cantidad').innerText);
                 const precio = parseInt(p.querySelector('.precio-prod').innerText);
                 const nombre = p.querySelector('.nombre-prod').innerText;
                 if(c > 0) {
                     const sub = c * precio;
-                    d += `✅ ${c} x $${precio.toLocaleString('es-CO')} ${nombre} = $${sub.toLocaleString('es-CO')}\n`;
+                    detalle += `✅ ${c} x $${precio.toLocaleString('es-CO')} ${nombre} = $${sub.toLocaleString('es-CO')}\n`;
                 }
             });
 
-            if(!d) { alert("🛒 Carrito vacío."); return; }
+            if(!detalle) { alert("🛒 El carrito está vacío. Agrega productos antes de enviar."); return; }
 
-            const msg = `*INVERSIONES CHARLOTTE'S*\n*PEDIDO # ${nro}*\n------------------------------\n*CLIENTE:* ${nom.toUpperCase()}\n*TEL:* ${cel}\n*DIR:* ${dir}\n------------------------------\n*PRODUCTOS (Cant x Val. Uni = Subtotal):*\n${d}------------------------------\n*TOTAL A PAGAR:* ${document.getElementById('total-display').innerText}\n------------------------------\n${obs ? `*OBS:* ${obs}\n------------------------------\n` : ''}_Gracias por tu compra_`;
+            const msg = `*INVERSIONES CHARLOTTE'S*\n*PEDIDO # ${nro}*\n------------------------------\n*CLIENTE:* ${nom.toUpperCase()}\n*TEL:* ${cel}\n*DIR:* ${dir}\n------------------------------\n*DETALLE DE FACTURA:*\n${detalle}------------------------------\n*TOTAL A PAGAR:* ${document.getElementById('total-display').innerText}\n------------------------------\n${obs ? `*OBS:* ${obs}\n------------------------------\n` : ''}_¡Muchas gracias por elegirnos!_`;
+            
             window.open(`https://wa.me/573222557721?text=${encodeURIComponent(msg)}`, '_blank');
+            
+            // Actualizar consecutivo para la pantalla
             document.getElementById('num-consecutivo').innerText = parseInt(nro) + 1;
+            
+            // FUNCIÓN CLAVE: Limpiar el pedido pero dejar los datos del cliente
+            limpiarPedido();
         }
     </script>
 </body>
