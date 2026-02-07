@@ -78,7 +78,6 @@
     </nav>
 
     <script>
-        // Cargar datos guardados
         window.onload = function() {
             document.getElementById('input-nombre').value = localStorage.getItem('nom_ch') || '';
             document.getElementById('input-celular').value = localStorage.getItem('cel_ch') || '';
@@ -113,19 +112,24 @@
 
             if(!nom || !cel || !dir) { alert("⚠️ Completa tus datos."); return; }
             
-            // Guardar datos para la próxima vez
             localStorage.setItem('nom_ch', nom); localStorage.setItem('cel_ch', cel); 
             localStorage.setItem('dir_ch', dir); localStorage.setItem('cont_ch', nro);
 
             let d = "";
+            let subtotal = 0;
             document.querySelectorAll('.item-producto').forEach(p => {
                 const c = parseInt(p.querySelector('.cantidad').innerText);
-                if(c > 0) d += `✅ ${c} x ${p.querySelector('.nombre-prod').innerText}\n`;
+                const precio = parseInt(p.querySelector('.precio-prod').innerText);
+                const nombre = p.querySelector('.nombre-prod').innerText;
+                if(c > 0) {
+                    const sub = c * precio;
+                    d += `✅ ${c} x $${precio.toLocaleString('es-CO')} ${nombre} = $${sub.toLocaleString('es-CO')}\n`;
+                }
             });
 
             if(!d) { alert("🛒 Carrito vacío."); return; }
 
-            const msg = `*INVERSIONES CHARLOTTE'S*\n*PEDIDO # ${nro}*\n------------------------------\n*CLIENTE:* ${nom.toUpperCase()}\n*TEL:* ${cel}\n*DIR:* ${dir}\n------------------------------\n*PRODUCTOS:*\n${d}*TOTAL:* ${document.getElementById('total-display').innerText}\n------------------------------\n${obs ? `*OBS:* ${obs}\n------------------------------\n` : ''}_Gracias por tu compra_`;
+            const msg = `*INVERSIONES CHARLOTTE'S*\n*PEDIDO # ${nro}*\n------------------------------\n*CLIENTE:* ${nom.toUpperCase()}\n*TEL:* ${cel}\n*DIR:* ${dir}\n------------------------------\n*PRODUCTOS (Cant x Val. Uni = Subtotal):*\n${d}------------------------------\n*TOTAL A PAGAR:* ${document.getElementById('total-display').innerText}\n------------------------------\n${obs ? `*OBS:* ${obs}\n------------------------------\n` : ''}_Gracias por tu compra_`;
             window.open(`https://wa.me/573222557721?text=${encodeURIComponent(msg)}`, '_blank');
             document.getElementById('num-consecutivo').innerText = parseInt(nro) + 1;
         }
